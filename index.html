@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --bg:#0b1020;
+  --card:#0f1730;
+  --text:#eaf0ff;
+  --muted:#9fb0d0;
+  --line:rgba(255,255,255,.12);
+  --shadow:0 18px 50px rgba(0,0,0,.35);
+  --r:18px;
+  --brand:#6ea8ff;
+  --brand2:#66f2c2;
+  --container:1120px;
+}
+:root[data-theme="light"]{
+  --bg:#f6f8ff;
+  --card:#ffffff;
+  --text:#0b1020;
+  --muted:#55627a;
+  --line:rgba(10,20,40,.12);
+  --shadow:0 18px 50px rgba(20,30,60,.12);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:
+    radial-gradient(800px 500px at 15% 10%, rgba(110,168,255,.18), transparent 55%),
+    radial-gradient(800px 500px at 85% 20%, rgba(102,242,194,.14), transparent 55%),
+    var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+svg{max-width:100%;display:block}
+.container{max-width:var(--container);margin:0 auto;padding:0 18px}
+
+/* NAV */
+.nav{
+  position:sticky;top:0;z-index:999;
+  backdrop-filter: blur(10px);
+  background: rgba(11,16,32,.65);
+  border-bottom:1px solid var(--line);
+}
+:root[data-theme="light"] .nav{ background: rgba(246,248,255,.80); }
+.navin{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0}
+.brand{display:flex;align-items:center;gap:10px;font-weight:1000}
+.logo{width:38px;height:38px}
+.menu{display:flex;align-items:center;gap:14px}
+.menu a{opacity:.85;font-weight:850;font-size:14px}
+.menu a:hover{opacity:1}
+
+.btn{
+  border:none;cursor:pointer;
+  padding:10px 14px;border-radius:14px;
+  font-weight:950;white-space:nowrap;
+}
+.btnPrimary{
+  color:#07101f;
+  background: linear-gradient(135deg, var(--brand), var(--brand2));
+  box-shadow: 0 14px 40px rgba(110,168,255,.14);
+}
+.btnGhost{
+  background: transparent;
+  border:1px solid var(--line);
+  color: var(--text);
+}
+.btn:active{transform:scale(.99)}
+
+.burger{
+  display:none;
+  width:44px;height:44px;border-radius:14px;
+  border:1px solid var(--line);
+  background:transparent;color:var(--text);
+}
+.burger span{
+  display:block;height:2px;background:color-mix(in oklab, var(--text) 70%, transparent);
+  margin:6px 10px;border-radius:999px;
+}
+
+/* MOBILE MENU */
+.mobileMenu{
+  display:grid;gap:10px;
+  padding:12px 0 16px;
+  border-top:1px solid var(--line);
+  position:relative;
+  z-index:1000;
+}
+.mobileMenu a,.mobileMenu button{width:100%}
+
+/* HERO */
+.hero{padding:28px 0 12px}
+.grid2{display:grid;grid-template-columns:1.12fr .88fr;gap:14px;align-items:stretch}
+.card{
+  background: rgba(15,23,48,.82);
+  border:1px solid var(--line);
+  border-radius: var(--r);
+  box-shadow: var(--shadow);
+}
+:root[data-theme="light"] .card{background: rgba(255,255,255,.88);}
+
+.heroCard{padding:18px}
+.pill{
+  display:inline-flex;gap:8px;align-items:center;
+  padding:7px 10px;border-radius:999px;
+  border:1px solid var(--line);
+  background: rgba(255,255,255,.05);
+  color:var(--muted);
+  font-weight:850;font-size:13px;
+}
+.h1{
+  margin:12px 0 10px;
+  font-size: clamp(28px, 4.2vw, 46px);
+  line-height:1.05;
+  letter-spacing:-.6px;
+}
+.grad{background:linear-gradient(90deg,var(--brand),var(--brand2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.grad2{background:linear-gradient(90deg,var(--brand2),var(--brand));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{margin:0 0 14px;color:var(--muted);line-height:1.65;font-weight:650}
+
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.chip{
+  padding:10px 12px;border-radius:14px;
+  border:1px solid var(--line);
+  background: rgba(255,255,255,.04);
+  font-weight:800;font-size:13px;
+  opacity:.97;
+}
+
+.mini{padding:14px;display:flex;flex-direction:column;gap:12px}
+.heroVisual{
+  border-radius:16px;
+  border:1px solid var(--line);
+  background: rgba(255,255,255,.04);
+  overflow:hidden;
+}
+.badge{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:10px;
+  padding:12px;border-radius:16px;
+  border:1px solid var(--line);
+  background: rgba(255,255,255,.04);
+}
+.badge b{font-weight:1000}
+.badge span{color:var(--muted);font-weight:750;font-size:13px}
+
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{
+  padding:12px;border-radius:16px;
+  border:1px solid var(--line);
+  background: rgba(255,255,255,.04);
+}
+.statNum{font-size:22px;font-weight:1000}
+.statLbl{color:var(--muted);font-weight:800;font-size:12px;margin-top:4px}
+.bar{height:10px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.06);overflow:hidden}
+.bar > div{height:100%;width:0%;background:linear-gradient(90deg,var(--brand),var(--brand2));border-radius:999px;transition:width .6s ease}
+
+.section{padding:18px 0}
+.titleRow{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:8px 0 12px}
+.h2{margin:0;font-size:22px}
+.sub{margin:4px 0 0;color:var(--muted);font-weight:700}
+
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.feat{padding:16px}
+.feat .img{
+  height:160px;border-radius:16px;border:1px solid var(--line);
+  background: rgba(255,255,255,.04);
+  overflow:hidden;
+  margin-bottom:12px;
+}
+.feat h3{margin:0 0 6px}
+.feat p{margin:0;color:var(--muted);line-height:1.65;font-weight:650}
+
+.work{overflow:hidden}
+.thumb{
+  height:170px;border-bottom:1px solid var(--line);
+  background:
+    radial-gradient(500px 220px at 20% 30%, rgba(110,168,255,.22), transparent 60%),
+    radial-gradient(500px 240px at 80% 35%, rgba(102,242,194,.18), transparent 60%),
+    rgba(255,255,255,.03);
+}
+.workBody{padding:14px}
+.workBody h3{margin:0 0 6px}
+.workBody p{margin:0;color:var(--muted);line-height:1.65;font-weight:650}
+
+.pricing .price{padding:16px;position:relative}
+.tag{
+  position:absolute;top:12px;right:12px;
+  padding:6px 10px;border-radius:999px;
+  border:1px solid var(--line);
+  background: rgba(255,255,255,.05);
+  color:var(--muted);font-weight:950;font-size:12px;
+}
+.money{margin:10px 0 10px;font-size:28px;font-weight:1100}
+.price ul{margin:0 0 12px;padding-left:18px;color:var(--muted);line-height:1.7;font-weight:700}
+.best{border-color:rgba(102,242,194,.35)}
+
+.faq{display:grid;gap:10px}
+details{
+  border:1px solid var(--line);
+  background: rgba(255,255,255,.04);
+  border-radius:16px;
+  padding:12px 14px;
+}
+summary{
+  cursor:pointer;
+  font-weight:1000;
+  list-style:none;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+summary::-webkit-details-marker{display:none}
+details p{margin:10px 0 0;color:var(--muted);line-height:1.7;font-weight:650}
+
+.form{padding:16px;display:grid;gap:10px}
+label{font-weight:900}
+input,textarea{
+  width:100%;border-radius:14px;border:1px solid var(--line);
+  background: rgba(255,255,255,.04);
+  color:var(--text);
+  padding:12px 12px;outline:none;font-weight:700;
+}
+textarea{min-height:118px;resize:vertical}
+.note{margin:0;color:var(--muted);font-size:13px;line-height:1.6;font-weight:650}
+
+.toast{
+  position:fixed;left:50%;bottom:18px;
+  transform:translateX(-50%) translateY(18px);
+  background: rgba(15,23,48,.92);
+  border:1px solid var(--line);
+  color:var(--text);
+  padding:10px 12px;border-radius:14px;
+  box-shadow: var(--shadow);
+  opacity:0;pointer-events:none;
+  transition: opacity .2s ease, transform .2s ease;
+  font-weight:900;z-index:9999;
+  max-width:min(520px,calc(100% - 24px));
+  text-align:center;
+}
+:root[data-theme="light"] .toast{background: rgba(255,255,255,.92); color: var(--text);}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.footer{padding:18px 0 28px;color:var(--muted);font-weight:750}
+
+.reveal{opacity:0;transform:translateY(10px);transition: opacity .5s ease, transform .5s ease}
+.reveal.on{opacity:1;transform:translateY(0)}
+
+/* FIX anchor ketutup header */
+#fitur, #portfolio, #harga, #faq, #kontak { scroll-margin-top: 92px; }
+
+@media (max-width: 920px){
+  .menu{display:none}
+  .burger{display:block}
+  .grid2{grid-template-columns:1fr}
+  .grid3{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container navin">
+    <a class="brand" href="#top" data-go="#top">
+      <svg class="logo" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#6ea8ff"/>
+            <stop offset="1" stop-color="#66f2c2"/>
+          </linearGradient>
+        </defs>
+        <rect x="10" y="10" width="120" height="120" rx="28" fill="url(#lg)"/>
+        <path d="M42 76c14 10 42 10 56 0" fill="none" stroke="#07101f" stroke-width="10" stroke-linecap="round"/>
+        <circle cx="52" cy="58" r="7" fill="#07101f"/>
+        <circle cx="88" cy="58" r="7" fill="#07101f"/>
+      </svg>
+      <span>Jasa Website UI/UX</span>
+    </a>
+
+    <nav class="menu" aria-label="Menu">
+      <a href="#fitur" data-go="#fitur">Fitur</a>
+      <a href="#portfolio" data-go="#portfolio">Portfolio</a>
+      <a href="#harga" data-go="#harga">Harga</a>
+      <a href="#faq" data-go="#faq">FAQ</a>
+      <a class="btn btnPrimary" href="#kontak" data-go="#kontak">Mulai</a>
+      <button class="btn btnGhost" id="btnTheme" type="button">Mode</button>
+    </nav>
+
+    <button class="burger" id="btnBurger" type="button" aria-label="Buka menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <div class="container mobileMenu" id="mobileMenu" hidden>
+    <a class="btn btnGhost" href="#fitur" data-go="#fitur">Fitur</a>
+    <a class="btn btnGhost" href="#portfolio" data-go="#portfolio">Portfolio</a>
+    <a class="btn btnGhost" href="#harga" data-go="#harga">Harga</a>
+    <a class="btn btnGhost" href="#faq" data-go="#faq">FAQ</a>
+    <a class="btn btnPrimary" href="#kontak" data-go="#kontak">Mulai</a>
+    <button class="btn btnGhost" id="btnTheme2" type="button">Mode</button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="container grid2">
+      <div class="card heroCard reveal">
+        <div class="pill">⚡ Final Tester • CodePen Ready • Tombol Fix • Responsive</div>
+        <h1 class="h1">
+          Website yang bikin orang <span class="grad">klik</span> & langsung <span class="grad2">chat WhatsApp</span>.
+        </h1>
+        <p class="lead">
+          Ini contoh landing page untuk promosi jasa pembuatan website. Tinggal ganti nama, harga, portofolio, dan teks sesuai klien.
+        </p>
+
+        <div class="row">
+          <button class="btn btnPrimary" id="btnCTA" type="button">Chat WhatsApp Sekarang</button>
+          <button class="btn btnGhost" id="btnCopy" type="button">Copy Pesan WA</button>
+        </div>
+
+        <div class="chips">
+          <span class="chip">✅ Responsive HP</span>
+          <span class="chip">✅ CTA WA</span>
+          <span class="chip">✅ Section lengkap</span>
+          <span class="chip">✅ Ilustrasi embed</span>
+        </div>
+
+        <div style="margin-top:12px" class="stats">
+          <div class="stat">
+            <div class="statNum" id="statLoad">0.0s</div>
+            <div class="statLbl">Perkiraan load</div>
+          </div>
+          <div class="stat">
+            <div class="statNum" id="statConv">0%</div>
+            <div class="statLbl">CTA click rate</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px" class="bar"><div id="barProg"></div></div>
+        <p class="note" style="margin-top:10px">Stat ini simulasi demo. Untuk project klien bisa pasang analytics (opsional).</p>
+      </div>
+
+      <div class="card mini reveal">
+        <div class="heroVisual" aria-label="Hero illustration">
+          <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Hero illustration">
+            <defs>
+              <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#0b1020"/>
+                <stop offset="1" stop-color="#0f1730"/>
+              </linearGradient>
+              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#6ea8ff"/>
+                <stop offset="1" stop-color="#66f2c2"/>
+              </linearGradient>
+              <radialGradient id="glow" cx="50%" cy="50%" r="70%">
+                <stop offset="0" stop-color="#6ea8ff" stop-opacity=".35"/>
+                <stop offset="1" stop-color="#6ea8ff" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+
+            <rect width="1200" height="800" rx="42" fill="url(#bg)"/>
+            <circle cx="320" cy="250" r="240" fill="url(#glow)"/>
+            <circle cx="860" cy="260" r="260" fill="#66f2c2" opacity=".14"/>
+
+            <g opacity=".92">
+              <rect x="140" y="140" width="920" height="520" rx="28" fill="#0b1020" opacity=".35" stroke="rgba(255,255,255,.12)"/>
+              <rect x="190" y="200" width="380" height="34" rx="12" fill="url(#g1)"/>
+              <rect x="190" y="250" width="520" height="18" rx="9" fill="rgba(255,255,255,.18)"/>
+              <rect x="190" y="280" width="440" height="18" rx="9" fill="rgba(255,255,255,.14)"/>
+
+              <rect x="190" y="340" width="300" height="120" rx="20" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.12)"/>
+              <rect x="520" y="340" width="350" height="120" rx="20" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.12)"/>
+
+              <rect x="190" y="500" width="680" height="26" rx="13" fill="rgba(255,255,255,.10)"/>
+              <rect x="190" y="500" width="520" height="26" rx="13" fill="url(#g1)"/>
+            </g>
+
+            <text x="190" y="620" font-family="system-ui,Segoe UI,Arial" font-size="22" fill="rgba(255,255,255,.75)" font-weight="700">
+              AI Hero Illustration • Embedded SVG
+            </text>
+          </svg>
+        </div>
+
+        <div class="badge">
+          <b>Nomor WA aktif</b>
+          <span id="waLabel">-</span>
+        </div>
+
+        <div class="row">
+          <button class="btn btnGhost" id="btnScroll" type="button">Lihat Section</button>
+          <button class="btn btnPrimary" id="btnDemo" type="button">Simulasi Interaksi</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="fitur">
+    <div class="container">
+      <div class="titleRow reveal">
+        <div>
+          <h2 class="h2">Fitur yang bikin terlihat profesional</h2>
+          <p class="sub">Struktur standar pasar untuk landing page jualan jasa.</p>
+        </div>
+        <button class="btn btnGhost" type="button" data-go="#harga">Lihat harga</button>
+      </div>
+
+      <div class="grid3">
+        <article class="card feat reveal">
+          <div class="img">
+            <svg viewBox="0 0 1200 520" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="fg1" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#6ea8ff"/>
+                  <stop offset="1" stop-color="#66f2c2"/>
+                </linearGradient>
+              </defs>
+              <rect width="1200" height="520" rx="36" fill="rgba(255,255,255,.04)"/>
+              <circle cx="240" cy="260" r="160" fill="url(#fg1)" opacity=".35"/>
+              <rect x="460" y="140" width="620" height="60" rx="18" fill="rgba(255,255,255,.14)"/>
+              <rect x="460" y="220" width="520" height="26" rx="13" fill="rgba(255,255,255,.12)"/>
+              <rect x="460" y="260" width="420" height="26" rx="13" fill="rgba(255,255,255,.10)"/>
+              <rect x="460" y="320" width="260" height="52" rx="18" fill="url(#fg1)"/>
+            </svg>
+          </div>
+          <h3>Fokus Konversi</h3>
+          <p>CTA jelas, layout rapi, dan copy yang mengarahkan pengunjung untuk chat/order.</p>
+        </article>
+
+        <article class="card feat reveal">
+          <div class="img">
+            <svg viewBox="0 0 1200 520" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="fg2" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#66f2c2"/>
+                  <stop offset="1" stop-color="#6ea8ff"/>
+                </linearGradient>
+              </defs>
+              <rect width="1200" height="520" rx="36" fill="rgba(255,255,255,.04)"/>
+              <rect x="180" y="90" width="320" height="340" rx="40" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.14)"/>
+              <rect x="220" y="140" width="240" height="26" rx="13" fill="url(#fg2)"/>
+              <rect x="220" y="190" width="240" height="18" rx="9" fill="rgba(255,255,255,.12)"/>
+              <rect x="220" y="220" width="210" height="18" rx="9" fill="rgba(255,255,255,.10)"/>
+              <rect x="220" y="280" width="200" height="46" rx="16" fill="url(#fg2)"/>
+              <circle cx="820" cy="220" r="150" fill="url(#fg2)" opacity=".25"/>
+              <rect x="620" y="300" width="420" height="34" rx="17" fill="rgba(255,255,255,.12)"/>
+              <rect x="620" y="350" width="360" height="34" rx="17" fill="rgba(255,255,255,.10)"/>
+            </svg>
+          </div>
+          <h3>Mobile First</h3>
+          <p>Tampilan nyaman di HP. Ini wajib karena mayoritas pengunjung dari mobile.</p>
+        </article>
+
+        <article class="card feat reveal">
+          <div class="img">
+            <svg viewBox="0 0 1200 520" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="fg3" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#6ea8ff"/>
+                  <stop offset="1" stop-color="#66f2c2"/>
+                </linearGradient>
+              </defs>
+              <rect width="1200" height="520" rx="36" fill="rgba(255,255,255,.04)"/>
+              <path d="M160 340c120-160 260-220 420-160 90 35 160 110 240 120 120 16 220-40 340-140"
+                    fill="none" stroke="url(#fg3)" stroke-width="20" stroke-linecap="round"/>
+              <circle cx="260" cy="320" r="22" fill="#66f2c2" opacity=".9"/>
+              <circle cx="520" cy="230" r="18" fill="#6ea8ff" opacity=".9"/>
+              <circle cx="760" cy="290" r="20" fill="#66f2c2" opacity=".9"/>
+              <circle cx="1020" cy="150" r="18" fill="#6ea8ff" opacity=".9"/>
+              <rect x="180" y="110" width="420" height="26" rx="13" fill="rgba(255,255,255,.14)"/>
+              <rect x="180" y="150" width="320" height="18" rx="9" fill="rgba(255,255,255,.10)"/>
+            </svg>
+          </div>
+          <h3>Ringan & Cepat</h3>
+          <p>Tanpa library berat. Landing cepat dibuka = peluang closing lebih tinggi.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="portfolio">
+    <div class="container">
+      <div class="titleRow reveal">
+        <div>
+          <h2 class="h2">Portfolio (contoh)</h2>
+          <p class="sub">Dummy untuk tester. Nanti ganti screenshot project asli.</p>
+        </div>
+      </div>
+
+      <div class="grid3">
+        <article class="card work reveal">
+          <div class="thumb"></div>
+          <div class="workBody">
+            <h3>Landing UMKM</h3>
+            <p>CTA kuat + section lengkap untuk promosi cepat.</p>
+            <div class="row" style="margin-top:10px">
+              <button class="btn btnGhost" type="button" data-toast="Preview demo (contoh)">Preview</button>
+              <button class="btn btnPrimary" type="button" data-toast="Link project bisa diisi nanti">Detail</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card work reveal">
+          <div class="thumb"></div>
+          <div class="workBody">
+            <h3>Company Profile</h3>
+            <p>Profil bisnis rapi, cocok untuk jasa/kontraktor.</p>
+            <div class="row" style="margin-top:10px">
+              <button class="btn btnGhost" type="button" data-toast="Preview demo (contoh)">Preview</button>
+              <button class="btn btnPrimary" type="button" data-toast="Link project bisa diisi nanti">Detail</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card work reveal">
+          <div class="thumb"></div>
+          <div class="workBody">
+            <h3>Personal Brand</h3>
+            <p>Hero + paket + kontak. Bagus untuk freelancer.</p>
+            <div class="row" style="margin-top:10px">
+              <button class="btn btnGhost" type="button" data-toast="Preview demo (contoh)">Preview</button>
+              <button class="btn btnPrimary" type="button" data-toast="Link project bisa diisi nanti">Detail</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="harga">
+    <div class="container">
+      <div class="titleRow reveal">
+        <div>
+          <h2 class="h2">Harga paket (contoh)</h2>
+          <p class="sub">Template tester—nanti sesuaikan saat ada klien.</p>
+        </div>
+      </div>
+
+      <div class="grid3 pricing">
+        <article class="card price reveal">
+          <div class="tag">Mulai</div>
+          <h3 style="margin:0">Basic</h3>
+          <div class="money">Rp 300k</div>
+          <ul>
+            <li>1 halaman landing</li>
+            <li>Mobile friendly</li>
+            <li>CTA WhatsApp</li>
+            <li>1x revisi</li>
+          </ul>
+          <button class="btn btnPrimary" type="button" data-pick="Basic">Pilih Basic</button>
+        </article>
+
+        <article class="card price best reveal">
+          <div class="tag">Paling laku</div>
+          <h3 style="margin:0">Pro</h3>
+          <div class="money">Rp 650k</div>
+          <ul>
+            <li>Section lengkap</li>
+            <li>Copywriting dibantu</li>
+            <li>Animasi halus</li>
+            <li>3x revisi</li>
+          </ul>
+          <button class="btn btnPrimary" type="button" data-pick="Pro">Pilih Pro</button>
+        </article>
+
+        <article class="card price reveal">
+          <div class="tag">Siap jualan</div>
+          <h3 style="margin:0">Business</h3>
+          <div class="money">Rp 1.2jt</div>
+          <ul>
+            <li>Landing + SEO basic</li>
+            <li>Portofolio/katalog</li>
+            <li>CTA WhatsApp</li>
+            <li>5x revisi</li>
+          </ul>
+          <button class="btn btnPrimary" type="button" data-pick="Business">Pilih Business</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="titleRow reveal">
+        <div>
+          <h2 class="h2">FAQ</h2>
+          <p class="sub">Jawaban singkat biar calon klien yakin.</p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <details class="reveal">
+          <summary>Berapa lama jadi? <span>+</span></summary>
+          <p>Basic 1–2 hari. Pro 2–4 hari tergantung materi dan revisi.</p>
+        </details>
+        <details class="reveal">
+          <summary>Revisi berapa kali? <span>+</span></summary>
+          <p>Sesuai paket. Revisi kecil termasuk. Ganti total desain masuk pekerjaan baru.</p>
+        </details>
+        <details class="reveal">
+          <summary>Bisa pakai domain sendiri? <span>+</span></summary>
+          <p>Bisa. Tester pakai link dulu. Kalau deal, domain bisa disambungkan ke hosting.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="kontak">
+    <div class="container">
+      <div class="titleRow reveal">
+        <div>
+          <h2 class="h2">Kontak</h2>
+          <p class="sub">Isi form → otomatis jadi pesan WhatsApp.</p>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="card form reveal">
+          <label>Nama</label>
+          <input id="name" placeholder="Contoh: Rian" />
+
+          <label>Jenis website</label>
+          <input id="type" placeholder="Landing page / Company profile / dll" />
+
+          <label>Catatan</label>
+          <textarea id="note" placeholder="Contoh: untuk usaha laundry, 1 halaman, ada tombol WA."></textarea>
+
+          <div class="row" style="margin-top:6px">
+            <button class="btn btnPrimary" id="btnSend" type="button">Kirim ke WhatsApp</button>
+            <button class="btn btnGhost" id="btnCopy2" type="button">Copy Pesan</button>
+          </div>
+
+          <p class="note" style="margin-top:8px">
+            Aman: tidak ada data dikirim ke server. Semua dibuat di browser.
+          </p>
+        </div>
+
+        <div class="card form reveal">
+          <h3 style="margin:0 0 8px">Kontak cepat</h3>
+          <p class="note">WhatsApp: <b id="waFooter">-</b></p>
+          <div class="row" style="margin-top:8px">
+            <button class="btn btnPrimary" type="button" id="btnWAQuick">Chat WA</button>
+            <button class="btn btnGhost" type="button" data-go="#top">Kembali ke atas</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div>© <span id="year"></span> — Landing Jasa Website (Final Tester)</div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast">OK</div>
+</main>
+
+<script>
+// ===== util =====
+const $ = (id) => document.getElementById(id);
+const toast = $("toast");
+
+function showToast(msg){
+  toast.textContent = msg || "OK!";
+  toast.classList.add("show");
+  clearTimeout(window.__t);
+  window.__t = setTimeout(()=> toast.classList.remove("show"), 1200);
+}
+
+async function copyText(text){
+  if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
+  const t = document.createElement("textarea");
+  t.value = text;
+  t.style.position = "fixed";
+  t.style.left = "-9999px";
+  document.body.appendChild(t);
+  t.select();
+  document.execCommand("copy");
+  t.remove();
+}
+
+// ===== year =====
+$("year").textContent = new Date().getFullYear();
+
+// ===== reveal on scroll =====
+const io = new IntersectionObserver((entries)=>{
+  for(const e of entries){ if(e.isIntersecting) e.target.classList.add("on"); }
+},{ threshold: 0.14 });
+document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+// ===== stats demo =====
+function rand(min,max){ return Math.random()*(max-min)+min; }
+function setStats(){
+  $("statLoad").textContent = rand(0.7, 1.4).toFixed(1) + "s";
+  $("statConv").textContent = Math.floor(rand(6, 18)) + "%";
+  $("barProg").style.width = Math.floor(rand(55, 92)) + "%";
+}
+setStats();
+
+// ===== theme =====
+const THEME_KEY = "landing_theme";
+function applyTheme(theme){
+  if(theme === "light") document.documentElement.setAttribute("data-theme","light");
+  else document.documentElement.removeAttribute("data-theme");
+}
+function toggleTheme(){
+  const isLight = document.documentElement.getAttribute("data-theme") === "light";
+  const next = isLight ? "dark" : "light";
+  localStorage.setItem(THEME_KEY, next);
+  applyTheme(next);
+  showToast(next === "light" ? "Mode Terang" : "Mode Gelap");
+}
+applyTheme(localStorage.getItem(THEME_KEY) || "dark");
+$("btnTheme")?.addEventListener("click", toggleTheme);
+$("btnTheme2")?.addEventListener("click", toggleTheme);
+
+// ===== mobile menu =====
+const mobileMenu = $("mobileMenu");
+$("btnBurger")?.addEventListener("click", ()=>{
+  const isHidden = mobileMenu.hasAttribute("hidden");
+  if(isHidden) mobileMenu.removeAttribute("hidden");
+  else mobileMenu.setAttribute("hidden","");
+});
+
+// ===== scroll helper =====
+function go(hash){
+  if(!hash || !hash.startsWith("#")) return;
+  if(mobileMenu && !mobileMenu.hasAttribute("hidden")) mobileMenu.setAttribute("hidden","");
+  const target = document.querySelector(hash);
+  if(target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+// paksa semua menu anchor pakai JS (lebih stabil)
+document.querySelectorAll("[data-go]").forEach(el=>{
+  el.addEventListener("click",(e)=>{
+    e.preventDefault();
+    go(el.getAttribute("data-go"));
+  });
+});
+
+// ===== WhatsApp =====
+// Nomor dari kamu: 89689547170 -> jadi 6289689547170
+const PHONE = "6289689547170";
+$("waLabel").textContent = "+" + PHONE;
+$("waFooter").textContent = "+" + PHONE;
+
+function buildWAmessage(extra){
+  const name = ($("name")?.value || "").trim();
+  const type = ($("type")?.value || "").trim();
+  const note = ($("note")?.value || "").trim();
+
+  const lines = [
+    "Halo, saya tertarik bikin website/landing page.",
+    extra ? `Paket: ${extra}` : null,
+    name ? `Nama: ${name}` : null,
+    type ? `Jenis: ${type}` : null,
+    note ? `Catatan: ${note}` : null,
+    "Bisa minta contoh & estimasi harganya?"
+  ].filter(Boolean);
+
+  return lines.join("\n");
+}
+
+function openWA(text){
+  window.location.href = `https://wa.me/${PHONE}?text=${encodeURIComponent(text)}`;
+}
+
+$("btnCTA")?.addEventListener("click", ()=> openWA(buildWAmessage(null)));
+
+$("btnCopy")?.addEventListener("click", async ()=>{
+  await copyText(buildWAmessage(null));
+  showToast("Pesan WA tersalin!");
+});
+
+$("btnScroll")?.addEventListener("click", ()=> go("#fitur"));
+
+$("btnDemo")?.addEventListener("click", ()=>{
+  setStats();
+  showToast("Simulasi jalan ✅");
+});
+
+$("btnSend")?.addEventListener("click", ()=> openWA(buildWAmessage(null)));
+
+$("btnCopy2")?.addEventListener("click", async ()=>{
+  await copyText(buildWAmessage(null));
+  showToast("Pesan tersalin!");
+});
+
+$("btnWAQuick")?.addEventListener("click", ()=> openWA(buildWAmessage(null)));
+
+document.querySelectorAll("[data-pick]").forEach(btn=>{
+  btn.addEventListener("click", ()=> openWA(buildWAmessage(btn.getAttribute("data-pick"))));
+});
+
+document.querySelectorAll("[data-toast]").forEach(btn=>{
+  btn.addEventListener("click", ()=> showToast(btn.getAttribute("data-toast")));
+});
+</script>
+
+</body>
+</html>
